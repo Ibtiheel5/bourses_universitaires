@@ -1,128 +1,992 @@
-/* AdminDashboard.css - Version Premium */
-.admin-dashboard {
+/* src/components/AdminDashboard.css - MODE CLAIR */
+.admin-dashboard-light {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  color: white;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #1f2937;
   font-family: 'Inter', -apple-system, sans-serif;
 }
 
-.admin-header {
-  background: linear-gradient(135deg, #334155 0%, #475569 100%);
-  padding: 2rem;
-  text-align: center;
-  border-bottom: 1px solid #475569;
+/* Header Admin - Mode Clair */
+.admin-header-light {
+  position: relative;
+  padding: 3rem 2rem 2rem;
+  background: linear-gradient(135deg, 
+    rgba(79, 70, 229, 0.08) 0%, 
+    rgba(99, 102, 241, 0.05) 50%, 
+    rgba(139, 92, 246, 0.08) 100%);
+  overflow: hidden;
+  border-bottom: 1px solid #e2e8f0;
 }
 
-.admin-header h1 {
+.admin-header-background-light {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.admin-glow-1-light {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 40%;
+  height: 140%;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, transparent 70%);
+  animation: admin-float 8s ease-in-out infinite;
+}
+
+.admin-glow-2-light {
+  position: absolute;
+  bottom: -30%;
+  left: -5%;
+  width: 30%;
+  height: 160%;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.08) 0%, transparent 70%);
+  animation: admin-float 6s ease-in-out infinite reverse;
+}
+
+@keyframes admin-float {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+}
+
+.admin-header-content-light {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-welcome-light h1 {
   font-size: 2.5rem;
   font-weight: 800;
   margin: 0 0 0.5rem 0;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.admin-header p {
+.admin-badge-light {
+  background: rgba(250, 204, 21, 0.1);
+  color: #d97706;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  margin-left: 1rem;
+  border: 1px solid rgba(250, 204, 21, 0.2);
+}
+
+.admin-subtitle-light {
   font-size: 1.1rem;
-  opacity: 0.8;
+  color: #6b7280;
   margin: 0;
 }
 
-.admin-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
+.admin-status-light {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.admin-status-light.healthy {
+  color: #16a34a;
+}
+
+.admin-quick-stats-light {
+  display: flex;
+  gap: 2rem;
+}
+
+.quick-stat-item-light {
+  text-align: center;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.quick-stat-value-light {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #3b82f6;
+  margin-bottom: 0.25rem;
+}
+
+.quick-stat-label-light {
+  font-size: 0.8rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Navigation Admin - Mode Clair */
+.admin-nav-light {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-nav-container-light {
   max-width: 1400px;
   margin: 0 auto;
+  display: flex;
+  padding: 0 2rem;
+  overflow-x: auto;
 }
 
-.admin-stat-card {
-  background: linear-gradient(135deg, #1e293b, #334155);
-  padding: 1.5rem;
-  border-radius: 12px;
-  border: 1px solid #475569;
+.admin-nav-tab-light {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-weight: 500;
+  cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
 }
 
-.admin-stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-  border-color: #64748b;
+.admin-nav-tab-light:hover {
+  color: #374151;
+  background: #f9fafb;
 }
 
-.admin-stat-card .stat-icon {
-  font-size: 2.5rem;
-  opacity: 0.9;
+.admin-nav-tab-light.active {
+  color: #7c3aed;
+  border-bottom-color: #7c3aed;
 }
 
-.admin-stat-card .stat-content h3 {
-  font-size: 2rem;
-  font-weight: 800;
-  margin: 0 0 0.25rem 0;
-  color: #f1f5f9;
+.admin-tab-icon-light {
+  font-size: 1.1rem;
 }
 
-.admin-stat-card .stat-content p {
+.admin-tab-label-light {
   font-size: 0.9rem;
-  opacity: 0.7;
-  margin: 0;
 }
 
-.admin-content-grid {
+.admin-tab-count-light {
+  background: #ef4444;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  min-width: 18px;
+}
+
+.admin-tab-indicator-light {
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: #7c3aed;
+  transition: width 0.3s ease;
+}
+
+.admin-nav-tab-light.active .admin-tab-indicator-light {
+  width: 100%;
+}
+
+/* Main Content - Mode Clair */
+.admin-main-light {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.admin-overview-grid-light {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
-  padding: 0 2rem 2rem;
+}
+
+/* Section Headers - Mode Clair */
+.admin-section-header-light {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.admin-section-header-light h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  color: #1f2937;
+}
+
+.time-filter-admin-light select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #374151;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Cartes Statistiques Admin - Mode Clair */
+.admin-stats-grid-light {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.admin-stat-card-light {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-stat-card-light:hover {
+  transform: translateY(-3px);
+  border-color: #7c3aed;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.admin-stat-background-light {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.admin-stat-glow-light {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.05) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.admin-stat-card-light:hover .admin-stat-glow-light {
+  opacity: 1;
+}
+
+.admin-stat-header-light {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.admin-stat-icon-wrapper-light {
+  width: 50px;
+  height: 50px;
+  background: rgba(124, 58, 237, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.admin-stat-icon-light {
+  font-size: 1.5rem;
+}
+
+.admin-stat-trend-light .trend-light {
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.trend-light.up {
+  background: rgba(34, 197, 94, 0.1);
+  color: #16a34a;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.trend-light.down {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.admin-stat-content-light {
+  position: relative;
+  z-index: 2;
+}
+
+.admin-stat-content-light h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem 0;
+  color: #1f2937;
+}
+
+.admin-stat-content-light p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+}
+
+.admin-stat-subtitle-light {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  display: block;
+}
+
+.admin-stat-metric-light {
+  margin-top: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.metric-bar-light {
+  height: 6px;
+  background: #f3f4f6;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.metric-fill-light {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #8b5cf6);
+  border-radius: 3px;
+  transition: width 1s ease;
+  position: relative;
+}
+
+.metric-fill-light::after {
+  content: attr(data-value)'%';
+  position: absolute;
+  right: 5px;
+  top: -20px;
+  font-size: 0.7rem;
+  color: #7c3aed;
+  font-weight: 600;
+}
+
+.metric-label-light {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.admin-stat-hover-light {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.02), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 16px;
+}
+
+.admin-stat-card-light:hover .admin-stat-hover-light {
+  opacity: 1;
+}
+
+/* Cartes Action Admin - Mode Clair */
+.admin-actions-grid-light {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.admin-action-card-light {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-action-card-light:hover {
+  transform: translateY(-2px);
+  border-color: #7c3aed;
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-action-background-light {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.03), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.admin-action-card-light:hover .admin-action-background-light {
+  opacity: 1;
+}
+
+.admin-action-icon-light {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.admin-action-content-light {
+  flex: 1;
+}
+
+.admin-action-content-light h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 0.25rem 0;
+}
+
+.admin-action-content-light p {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.admin-action-count-light {
+  background: #ef4444;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.admin-action-count-light span {
+  display: block;
+  text-align: center;
+}
+
+.admin-action-arrow-light {
+  font-size: 1.2rem;
+  color: #7c3aed;
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+}
+
+.admin-action-card-light:hover .admin-action-arrow-light {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Santé du Système - Mode Clair */
+.system-health-section-light {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.system-health-section-light h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  color: #1f2937;
+}
+
+.health-metrics-grid-light {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.health-metric-light {
+  background: #f9fafb;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.health-label-light {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.health-value-light {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.health-bar-light {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.health-fill-light {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1s ease;
+}
+
+.health-fill-light.primary {
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.health-fill-light.warning {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.health-fill-light.danger {
+  background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+.health-fill-light.success {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.system-alerts-light h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: #1f2937;
+}
+
+.alerts-list-light {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.system-alert-light {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid;
+  transition: all 0.3s ease;
+  background: #f9fafb;
+}
+
+.system-alert-light.warning {
+  background: rgba(245, 158, 11, 0.05);
+  border-left-color: #f59e0b;
+}
+
+.system-alert-light.info {
+  background: rgba(59, 130, 246, 0.05);
+  border-left-color: #3b82f6;
+}
+
+.system-alert-light.error {
+  background: rgba(239, 68, 68, 0.05);
+  border-left-color: #ef4444;
+}
+
+.system-alert-light.success {
+  background: rgba(34, 197, 94, 0.05);
+  border-left-color: #22c55e;
+}
+
+.alert-icon-light {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.alert-content-light {
+  flex: 1;
+}
+
+.alert-content-light p {
+  font-size: 0.85rem;
+  color: #1f2937;
+  margin: 0 0 0.25rem 0;
+  font-weight: 500;
+}
+
+.alert-content-light span {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.alert-indicator-light {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.system-alert-light.warning .alert-indicator-light {
+  background: #f59e0b;
+}
+
+.system-alert-light.info .alert-indicator-light {
+  background: #3b82f6;
+}
+
+.system-alert-light.error .alert-indicator-light {
+  background: #ef4444;
+}
+
+.system-alert-light.success .alert-indicator-light {
+  background: #22c55e;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Activité Admin - Mode Clair */
+.admin-activity-section-light {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-activity-section-light h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  color: #1f2937;
+}
+
+.admin-activity-list-light {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-activity-item-light {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-activity-item-light:hover {
+  transform: translateX(5px);
+  border-color: #7c3aed;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-activity-item-light.high {
+  border-left: 4px solid #ef4444;
+}
+
+.admin-activity-item-light.medium {
+  border-left: 4px solid #f59e0b;
+}
+
+.admin-activity-item-light.low {
+  border-left: 4px solid #22c55e;
+}
+
+.activity-icon-light {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.activity-content-light {
+  flex: 1;
+}
+
+.activity-header-light {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.activity-user-light {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.activity-time-light {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.activity-action-light {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.activity-priority-light {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.admin-activity-item-light:hover .activity-priority-light {
+  opacity: 1;
+}
+
+/* États vides Admin - Mode Clair */
+.admin-empty-state-light {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 16px;
+  border: 2px dashed #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-empty-icon-light {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.admin-empty-state-light h3 {
+  color: #374151;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.admin-empty-state-light p {
+  color: #6b7280;
+  margin: 0 0 2rem 0;
+}
+
+.btn-admin-primary-light {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.3);
+}
+
+.btn-admin-primary-light:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+}
+
+/* Footer Admin - Mode Clair */
+.admin-footer-light {
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  padding: 2rem;
+  margin-top: 4rem;
+}
+
+.admin-footer-content-light {
   max-width: 1400px;
   margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.recent-activity, .system-health {
-  background: #1e293b;
-  padding: 1.5rem;
+.admin-footer-content-light p {
+  color: #6b7280;
+  margin: 0;
+}
+
+.admin-footer-links-light {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.admin-user-light {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.admin-footer-link-light {
+  background: none;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.admin-footer-link-light:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+/* Loading State - Mode Clair */
+.admin-loading-light {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1f2937;
+}
+
+.admin-loading-content-light {
+  text-align: center;
+  max-width: 400px;
+  padding: 3rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.admin-loading-logo-light {
+  margin-bottom: 3rem;
+}
+
+.loading-crown-light {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: bounce 2s infinite;
+}
+
+.admin-loading-logo-light h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin: 0;
+}
+
+.admin-loading-stats-light {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.loading-stat-light {
+  flex: 1;
+  height: 80px;
+  background: #f3f4f6;
   border-radius: 12px;
-  border: 1px solid #475569;
+  border: 1px solid #e5e7eb;
+  animation: pulse 2s infinite;
 }
 
-.recent-activity h3, .system-health h3 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0 0 1rem 0;
-  color: #f1f5f9;
-  border-bottom: 2px solid #475569;
-  padding-bottom: 0.5rem;
+.admin-loading-content-light p {
+  color: #6b7280;
+  margin: 0;
 }
 
-/* Responsive Admin */
-@media (max-width: 768px) {
-  .admin-content-grid {
+/* Responsive - Mode Clair */
+@media (max-width: 1024px) {
+  .admin-overview-grid-light {
     grid-template-columns: 1fr;
-    padding: 0 1rem 1rem;
   }
   
-  .admin-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .admin-header-content-light {
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  .admin-quick-stats-light {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-header-light {
+    padding: 2rem 1rem 1.5rem;
+  }
+  
+  .admin-welcome-light h1 {
+    font-size: 2rem;
+  }
+  
+  .admin-nav-container-light {
+    padding: 0 1rem;
+  }
+  
+  .admin-nav-tab-light {
     padding: 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .admin-main-light {
+    padding: 1rem;
+  }
+  
+  .admin-stats-grid-light {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-actions-grid-light {
+    grid-template-columns: 1fr;
+  }
+  
+  .health-metrics-grid-light {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .admin-quick-stats-light {
+    flex-direction: column;
     gap: 1rem;
   }
   
-  .admin-header {
-    padding: 1.5rem 1rem;
+  .admin-footer-content-light {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
   }
   
-  .admin-header h1 {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .admin-stats-grid {
-    grid-template-columns: 1fr;
+  .admin-footer-links-light {
+    flex-direction: column;
+    gap: 1rem;
   }
 }

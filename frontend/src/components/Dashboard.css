@@ -483,3 +483,300 @@
     width: 100%;
   }
 }
+/* src/components/Dashboard.css (Version Premium Étendue) */
+/* ... (Le CSS reste le même que votre version actuelle mais étendu) */
+
+/* Styles spécifiques pour Admin */
+.premium-dashboard.admin .premium-dashboard-header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #7e22ce 100%);
+}
+
+.premium-dashboard.admin .premium-tabs-navigation {
+  background: linear-gradient(135deg, #374151, #4b5563);
+}
+
+.admin-badge {
+  background: rgba(255, 215, 0, 0.2);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  margin-left: 8px;
+}
+
+.admin-content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.time-filter select {
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  font-size: 0.9rem;
+}
+
+/* Styles pour les échéances */
+.deadlines-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.deadlines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.deadline-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 10px;
+  border-left: 4px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.deadline-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.deadline-card.high {
+  border-left-color: #ef4444;
+  background: #fef2f2;
+}
+
+.deadline-card.medium {
+  border-left-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.deadline-card.low {
+  border-left-color: #10b981;
+  background: #f0fdf4;
+}
+
+.deadline-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.deadline-icon {
+  font-size: 1.5rem;
+}
+
+.deadline-days {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #6b7280;
+}
+
+.deadline-content {
+  flex: 1;
+}
+
+.deadline-content h4 {
+  margin: 0 0 4px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.deadline-content p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.deadline-priority {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.deadline-priority.high {
+  background: #fecaca;
+  color: #dc2626;
+}
+
+.deadline-priority.medium {
+  background: #fed7aa;
+  color: #ea580c;
+}
+
+.deadline-priority.low {
+  background: #bbf7d0;
+  color: #16a34a;
+}
+
+/* Styles pour l'activité récente */
+.recent-activity-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 10px;
+  border-left: 4px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.activity-item.high {
+  border-left-color: #ef4444;
+}
+
+.activity-item.medium {
+  border-left-color: #f59e0b;
+}
+
+.activity-item.low {
+  border-left-color: #10b981;
+}
+
+.activity-icon {
+  font-size: 1.2rem;
+  margin-top: 2px;
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-message {
+  margin: 0 0 4px 0;
+  font-size: 0.9rem;
+  color: #374151;
+  line-height: 1.4;
+}
+
+.activity-time {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Responsive amélioré */
+@media (max-width: 1024px) {
+  .admin-content-grid,
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .premium-tabs-navigation {
+    overflow-x: auto;
+    padding: 0 1rem;
+  }
+  
+  .premium-tab {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .section-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* Animations supplémentaires */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(102, 126, 234, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.8); }
+}
+
+.stat-card-premium:hover {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Loading states améliorés */
+.dashboard-loading-premium {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.premium-loading {
+  text-align: center;
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.loading-cap {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.loading-progress {
+  width: 200px;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 1rem auto;
+}
+
+.loading-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  animation: loading 2s infinite;
+}
+
+@keyframes loading {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}

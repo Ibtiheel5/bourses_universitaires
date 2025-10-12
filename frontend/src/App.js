@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import api from './api';
@@ -6,6 +7,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import UserList from './components/UserList';
 import Dashboard from './components/Dashboard';
+import AdminDashboard from './components/AdminDashboard';
 import './App.css';
 
 function App() {
@@ -53,52 +55,57 @@ function App() {
   const handleLogout = async () => {
     try {
       await api.post('/users/logout/');
+      console.log('✅ Déconnexion réussie');
     } catch (error) {
       console.error('Erreur lors de la déconnexion:', error);
     } finally {
       setUser(null);
+      // Force refresh pour nettoyer l'état
+      window.location.href = '/login';
     }
   };
 
-  // Écran de chargement seulement pendant la vérification initiale
+  // Fonction pour déterminer le composant de dashboard à afficher
+  const renderDashboard = () => {
+    if (!user) return <Navigate to="/login" replace />;
+    
+    if (user.user_type === 'admin') {
+      return <AdminDashboard user={user} />;
+    } else {
+      return <Dashboard user={user} />;
+    }
+  };
+
+  // Écran de chargement premium
   if (loading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh',
-        flexDirection: 'column',
-        fontFamily: 'Arial, sans-serif',
-        backgroundColor: '#f5f5f5'
-      }}>
-        <div style={{ 
-          background: 'white', 
-          padding: '2rem', 
-          borderRadius: '12px', 
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-          textAlign: 'center'
-        }}>
-          <h2 style={{ color: '#1e3a8a', marginBottom: '1rem' }}>CampusBourses</h2>
-          <p style={{ color: '#6b7280', marginBottom: '1.5rem' }}>Chargement de votre espace...</p>
-          <div style={{ 
-            width: '40px', 
-            height: '40px', 
-            border: '4px solid #f3f3f3', 
-            borderTop: '4px solid #3498db', 
-            borderRadius: '50%', 
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto'
-          }}></div>
+      <div className="app-loading-premium">
+        <div className="loading-content">
+          <div className="loading-logo">
+            <div className="logo-icon">🎓</div>
+            <h1>CampusBourses</h1>
+          </div>
+          <div className="loading-progress-container">
+            <div className="loading-progress-bar">
+              <div className="loading-progress-fill"></div>
+            </div>
+            <p>Initialisation de votre espace...</p>
+          </div>
+          <div className="loading-features">
+            <div className="feature-card">
+              <span className="feature-icon">⚡</span>
+              <span>Interface Ultra-Rapide</span>
+            </div>
+            <div className="feature-card">
+              <span className="feature-icon">🎯</span>
+              <span>Expérience Personnalisée</span>
+            </div>
+            <div className="feature-card">
+              <span className="feature-icon">🔒</span>
+              <span>Sécurité Maximale</span>
+            </div>
+          </div>
         </div>
-        <style>
-          {`
-            @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
-            }
-          `}
-        </style>
       </div>
     );
   }
@@ -106,25 +113,53 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar user={user} onLogout={handleLogout} />
-        <div className="container">
+        {/* Navbar conditionnelle - ne pas afficher sur les pages d'authentification */}
+        {user && <Navbar user={user} onLogout={handleLogout} />}
+        
+        <div className={`app-container ${!user ? 'auth-layout' : ''}`}>
           <Routes>
+            {/* Routes d'authentification - accessibles seulement si non connecté */}
             <Route 
               path="/login" 
-              element={!user ? <Login onLogin={handleLogin} /> : <Navigate to="/" replace />} 
+              element={
+                !user ? (
+                  <Login onLogin={handleLogin} />
+                ) : (
+                  <Navigate to="/" replace />
+                )
+              } 
             />
             <Route 
               path="/register" 
-              element={!user ? <Register onLogin={handleLogin} /> : <Navigate to="/" replace />} 
+              element={
+                !user ? (
+                  <Register onLogin={handleLogin} />
+                ) : (
+                  <Navigate to="/" replace />
+                )
+              } 
             />
+            
+            {/* Routes protégées - accessibles seulement si connecté */}
             <Route 
               path="/users" 
-              element={user?.user_type === 'admin' ? <UserList /> : <Navigate to="/" replace />} 
+              element={
+                user?.user_type === 'admin' ? (
+                  <UserList />
+                ) : user ? (
+                  <Navigate to="/" replace />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
             />
+            
+            {/* Route dashboard principale avec routing intelligent */}
             <Route 
               path="/" 
-              element={user ? <Dashboard user={user} /> : <Navigate to="/login" replace />} 
+              element={renderDashboard()}
             />
+            
             {/* Route de fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

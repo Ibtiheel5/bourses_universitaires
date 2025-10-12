@@ -1,10 +1,14 @@
+// src/components/UserList.js (Version Premium)
 import React, { useState, useEffect } from 'react';
 import api from '../api';
+import './UserList.css';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterType, setFilterType] = useState('all');
 
   useEffect(() => {
     fetchUsers();
@@ -34,86 +38,147 @@ const UserList = () => {
     }
   };
 
+  const filteredUsers = users.filter(user => {
+    const matchesSearch = user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (user.first_name && user.first_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                         (user.last_name && user.last_name.toLowerCase().includes(searchTerm.toLowerCase()));
+    
+    const matchesFilter = filterType === 'all' || user.user_type === filterType;
+    
+    return matchesSearch && matchesFilter;
+  });
+
   if (loading) {
-    return <div className="container loading">Chargement des utilisateurs...</div>;
+    return (
+      <div className="user-list-loading">
+        <div className="loading-spinner-large"></div>
+        <p>Chargement des utilisateurs...</p>
+      </div>
+    );
   }
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Gestion des Utilisateurs</h1>
-      {error && <div className="alert alert-error">{error}</div>}
+    <div className="user-list-premium">
+      <div className="user-list-header">
+        <h1>👥 Gestion des Utilisateurs</h1>
+        <p>Administrez les comptes utilisateurs de la plateforme</p>
+      </div>
+
+      <div className="user-list-controls">
+        <div className="search-box">
+          <input
+            type="text"
+            placeholder="🔍 Rechercher un utilisateur..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+        </div>
+        
+        <div className="filter-controls">
+          <select 
+            value={filterType} 
+            onChange={(e) => setFilterType(e.target.value)}
+            className="filter-select"
+          >
+            <option value="all">Tous les types</option>
+            <option value="student">Étudiants</option>
+            <option value="admin">Administrateurs</option>
+          </select>
+          
+          <span className="user-count">
+            {filteredUsers.length} utilisateur{filteredUsers.length !== 1 ? 's' : ''}
+          </span>
+        </div>
+      </div>
+
+      {error && (
+        <div className="user-list-error">
+          <div className="error-icon">⚠️</div>
+          <div className="error-message">{error}</div>
+        </div>
+      )}
       
-      {users.length === 0 ? (
-        <div className="alert alert-info">
-          Aucun utilisateur trouvé dans le système.
+      {filteredUsers.length === 0 ? (
+        <div className="user-list-empty">
+          <div className="empty-icon">👥</div>
+          <h3>Aucun utilisateur trouvé</h3>
+          <p>Aucun utilisateur ne correspond à vos critères de recherche.</p>
         </div>
       ) : (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nom d'utilisateur</th>
-              <th>Email</th>
-              <th>Prénom</th>
-              <th>Nom</th>
-              <th>Type</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map(user => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.username}</td>
-                <td>{user.email}</td>
-                <td>{user.first_name || '-'}</td>
-                <td>{user.last_name || '-'}</td>
-                <td>
-                  <span className={`user-type-badge ${user.user_type}`}>
-                    {user.user_type === 'admin' ? 'Administrateur' : 'Étudiant'}
-                  </span>
-                </td>
-                <td>
-                  <button 
-                    className="btn btn-danger"
-                    onClick={() => handleDelete(user.id)}
-                    disabled={user.user_type === 'admin'} // Empêcher la suppression des admins
-                  >
-                    Supprimer
-                  </button>
-                </td>
+        <div className="user-list-table-container">
+          <table className="user-list-table">
+            <thead>
+              <tr>
+                <th>Utilisateur</th>
+                <th>Contact</th>
+                <th>Type</th>
+                <th>Statut</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredUsers.map(user => (
+                <tr key={user.id} className="user-row">
+                  <td>
+                    <div className="user-info">
+                      <div className="user-avatar">
+                        {user.first_name && user.last_name 
+                          ? `${user.first_name[0]}${user.last_name[0]}`.toUpperCase()
+                          : user.username[0].toUpperCase()
+                        }
+                      </div>
+                      <div className="user-details">
+                        <div className="user-name">
+                          {user.first_name} {user.last_name}
+                        </div>
+                        <div className="user-username">@{user.username}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="user-contact">
+                      <div className="user-email">{user.email}</div>
+                      {user.phone_number && (
+                        <div className="user-phone">{user.phone_number}</div>
+                      )}
+                    </div>
+                  </td>
+                  <td>
+                    <span className={`user-type-badge ${user.user_type}`}>
+                      {user.user_type === 'admin' ? '👑 Administrateur' : '🎓 Étudiant'}
+                    </span>
+                  </td>
+                  <td>
+                    <span className={`user-status ${user.is_active ? 'active' : 'inactive'}`}>
+                      {user.is_active ? '✅ Actif' : '❌ Inactif'}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="user-actions">
+                      <button className="btn-action view" title="Voir le profil">
+                        👁️
+                      </button>
+                      <button className="btn-action edit" title="Modifier">
+                        ✏️
+                      </button>
+                      <button 
+                        className="btn-action delete" 
+                        onClick={() => handleDelete(user.id)}
+                        disabled={user.user_type === 'admin'}
+                        title={user.user_type === 'admin' ? 'Impossible de supprimer un admin' : 'Supprimer'}
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
-
-      <style jsx>{`
-        .user-type-badge {
-          padding: 0.25rem 0.5rem;
-          border-radius: 12px;
-          font-size: 0.8rem;
-          font-weight: 600;
-        }
-        
-        .user-type-badge.admin {
-          background: #fee2e2;
-          color: #dc2626;
-        }
-        
-        .user-type-badge.student {
-          background: #dbeafe;
-          color: #1d4ed8;
-        }
-        
-        .alert-info {
-          background: #dbeafe;
-          color: #1e40af;
-          padding: 1rem;
-          border-radius: 8px;
-          border: 1px solid #93c5fd;
-        }
-      `}</style>
     </div>
   );
 };

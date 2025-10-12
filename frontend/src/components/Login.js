@@ -1,6 +1,8 @@
+// src/components/Login.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import api from '../api';
+import './Login.css';
 
 const Login = ({ onLogin }) => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,7 @@ const Login = ({ onLogin }) => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -84,95 +87,129 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className="form-container">
-      <h2>Connexion à CampusBourses</h2>
-      
-      {error && (
-        <div className="alert alert-error">
-          <strong>Erreur:</strong> {error}
-        </div>
-      )}
-      
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Nom d'utilisateur *</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-            disabled={loading}
-            placeholder="Entrez votre nom d'utilisateur"
-            autoComplete="username"
-          />
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="password">Mot de passe *</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            disabled={loading}
-            placeholder="Entrez votre mot de passe"
-            minLength="6"
-            autoComplete="current-password"
-          />
-        </div>
-        
-        <button 
-          type="submit" 
-          className="btn btn-primary"
-          disabled={loading}
-        >
-          {loading ? (
-            <>
-              <span>Connexion en cours...</span>
-              <div style={{
-                width: '16px',
-                height: '16px',
-                border: '2px solid #ffffff',
-                borderTop: '2px solid transparent',
-                borderRadius: '50%',
-                animation: 'spin 1s linear infinite',
-                marginLeft: '8px'
-              }}></div>
-            </>
-          ) : (
-            'Se connecter'
-          )}
-        </button>
-      </form>
-      
-      <div style={{ marginTop: '1.5rem', textAlign: 'center', paddingTop: '1rem', borderTop: '1px solid #e5e7eb' }}>
-        <p style={{ color: '#6b7280', margin: 0 }}>
-          Pas de compte ?{' '}
-          <a 
-            href="/register" 
-            style={{ 
-              color: '#4f46e5', 
-              textDecoration: 'none',
-              fontWeight: '600'
-            }}
-            onMouseOver={(e) => e.target.style.textDecoration = 'underline'}
-            onMouseOut={(e) => e.target.style.textDecoration = 'none'}
-          >
-            S'inscrire
-          </a>
-        </p>
-      </div>
+    <div className="login-premium-container">
+      <div className="login-premium-background">
+        <div className="login-premium-card">
+          <div className="login-premium-header">
+            <div className="login-premium-logo">
+              <span className="login-premium-logo-icon">🎓</span>
+              <h1>CampusBourses</h1>
+            </div>
+            <h2>Connexion à votre espace</h2>
+            <p>Accédez à votre tableau de bord personnel</p>
+          </div>
 
-      <style>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
+          {error && (
+            <div className="login-premium-error">
+              <div className="error-icon">⚠️</div>
+              <div className="error-message">{error}</div>
+            </div>
+          )}
+          
+          <form onSubmit={handleSubmit} className="login-premium-form">
+            <div className="form-group-premium">
+              <label htmlFor="username" className="form-label-premium">
+                <span className="label-icon">👤</span>
+                Nom d'utilisateur
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                required
+                disabled={loading}
+                placeholder="Entrez votre nom d'utilisateur"
+                autoComplete="username"
+                className="form-input-premium"
+              />
+            </div>
+            
+            <div className="form-group-premium">
+              <label htmlFor="password" className="form-label-premium">
+                <span className="label-icon">🔒</span>
+                Mot de passe
+              </label>
+              <div className="password-input-container">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  disabled={loading}
+                  placeholder="Entrez votre mot de passe"
+                  minLength="6"
+                  autoComplete="current-password"
+                  className="form-input-premium"
+                />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? '🙈' : '👁️'}
+                </button>
+              </div>
+            </div>
+
+            <div className="form-options">
+              <label className="checkbox-container">
+                <input type="checkbox" />
+                <span className="checkmark"></span>
+                Se souvenir de moi
+              </label>
+              <a href="/forgot-password" className="forgot-password">
+                Mot de passe oublié ?
+              </a>
+            </div>
+            
+            <button 
+              type="submit" 
+              className={`login-premium-btn ${loading ? 'loading' : ''}`}
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <div className="btn-spinner"></div>
+                  Connexion en cours...
+                </>
+              ) : (
+                <>
+                  <span>Se connecter</span>
+                  <span className="btn-arrow">→</span>
+                </>
+              )}
+            </button>
+          </form>
+          
+          <div className="login-premium-footer">
+            <p className="signup-prompt">
+              Pas encore de compte ?{' '}
+              <Link to="/register" className="signup-link">
+                Créer un compte
+              </Link>
+            </p>
+            
+            <div className="login-premium-features">
+              <div className="feature-item">
+                <span className="feature-icon">⚡</span>
+                <span>Accès rapide</span>
+              </div>
+              <div className="feature-item">
+                <span className="feature-icon">🔒</span>
+                <span>Sécurisé</span>
+              </div>
+              <div className="feature-item">
+                <span className="feature-icon">🎯</span>
+                <span>Personnalisé</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
