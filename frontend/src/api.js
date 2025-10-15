@@ -1,3 +1,4 @@
+// src/api.js
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:8000/api';
@@ -8,10 +9,9 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000, // 10 secondes timeout
+  timeout: 10000,
 });
 
-// Fonction pour récupérer le token CSRF depuis les cookies
 const getCSRFToken = () => {
   const name = 'csrftoken';
   let cookieValue = null;
@@ -28,17 +28,13 @@ const getCSRFToken = () => {
   return cookieValue;
 };
 
-// Intercepteur pour ajouter le token CSRF aux requêtes
 api.interceptors.request.use(
   (config) => {
     const csrfToken = getCSRFToken();
     
-    // Ajouter CSRF token aux requêtes modifiantes
     if (['post', 'put', 'delete', 'patch'].includes(config.method?.toLowerCase())) {
       if (csrfToken) {
         config.headers['X-CSRFToken'] = csrfToken;
-      } else {
-        console.warn('CSRF token manquant');
       }
     }
 
@@ -50,17 +46,17 @@ api.interceptors.request.use(
   }
 );
 
-// Intercepteur pour gérer les erreurs globales
 api.interceptors.response.use(
   (response) => {
     return response;
   },
   (error) => {
-    console.error('Erreur API:', error.response?.status, error.message);
-    
-    // Ne pas rediriger automatiquement pour les erreurs 401/403
-    // Laisser l'application gérer ces cas
-    if (error.response?.status === 500) {
+    if (error.response?.status === 401) {
+      // Redirection vers login gérée dans les composants
+      console.log('Non authentifié - redirection nécessaire');
+    } else if (error.response?.status === 403) {
+      console.error('Accès refusé');
+    } else if (error.response?.status === 500) {
       console.error('Erreur serveur 500');
     }
     

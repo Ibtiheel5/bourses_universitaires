@@ -1,13 +1,19 @@
-// src/App.js
+// src/App.js - Version complète avec route Applications
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import api from './api';
+import AdminDocuments from './components/AdminDocuments';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Register from './components/Register';
 import UserList from './components/UserList';
 import Dashboard from './components/Dashboard';
 import AdminDashboard from './components/AdminDashboard';
+import Documents from './components/Documents';
+import EligibilityRules from './components/EligibilityRules';
+import Profile from './components/Profile';
+import Applications from './components/Applications'; // Import du nouveau composant
+import Notifications from './components/Notifications';
 import './App.css';
 
 function App() {
@@ -70,7 +76,7 @@ function App() {
     if (!user) return <Navigate to="/login" replace />;
     
     if (user.user_type === 'admin') {
-      return <AdminDashboard user={user} />;
+      return <AdminDashboard user={user} onLogout={handleLogout} />;
     } else {
       return <Dashboard user={user} />;
     }
@@ -142,6 +148,45 @@ function App() {
             
             {/* Routes protégées - accessibles seulement si connecté */}
             <Route 
+              path="/profile" 
+              element={
+                user ? (
+                  <Profile user={user} onUserUpdate={setUser} />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            {/* Routes étudiant */}
+            <Route 
+              path="/applications" 
+              element={
+                user?.user_type === 'student' ? (
+                  <Applications />
+                ) : user ? (
+                  <Navigate to="/" replace />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            <Route 
+              path="/documents" 
+              element={
+                user?.user_type === 'student' ? (
+                  <Documents />
+                ) : user ? (
+                  <Navigate to="/" replace />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            {/* Routes administrateur */}
+            <Route 
               path="/users" 
               element={
                 user?.user_type === 'admin' ? (
@@ -154,10 +199,48 @@ function App() {
               } 
             />
             
+            <Route 
+              path="/admin-documents" 
+              element={
+                user?.user_type === 'admin' ? (
+                  <AdminDocuments />
+                ) : user ? (
+                  <Navigate to="/" replace />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
+            {/* Routes communes */}
+            <Route 
+              path="/eligibility-rules" 
+              element={
+                user ? (
+                  <EligibilityRules user={user} />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
+            />
+            
             {/* Route dashboard principale avec routing intelligent */}
             <Route 
               path="/" 
               element={renderDashboard()}
+            />
+            // Dans App.js - ajoutez cette route
+            <Route 
+              path="/notifications" 
+              element={
+                user?.user_type === 'student' ? (
+                  <Notifications />
+                ) : user ? (
+                  <Navigate to="/" replace />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
             />
             
             {/* Route de fallback */}
@@ -166,6 +249,7 @@ function App() {
         </div>
       </div>
     </Router>
+
   );
 }
 

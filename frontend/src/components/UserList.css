@@ -317,3 +317,67 @@
     min-width: 800px;
   }
 }
+/* src/components/UserList.css - VERSION ESSENTIELLE */
+.user-list-container {
+  padding: 20px;
+}
+
+.user-list-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.users-table th {
+  background: #f5f5f5;
+}
+
+.user-row:hover {
+  background: #f9f9f9;
+}
+
+.avatar-placeholder {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #007bff;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.btn-danger {
+  background: #ff4444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.no-users {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
